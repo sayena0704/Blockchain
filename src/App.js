@@ -1,23 +1,31 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import LoginPage from './components/LoginPage';
+import UploadPage from './components/UploadPage';
 
 function App() {
+  const [isConnected, setIsConnected] = useState(false);
+  const [currentPage, setCurrentPage] = useState('login');
+
+  const handleLogin = () => {
+    setIsConnected(true);
+    setCurrentPage('upload');
+  };
+
+  const handleNavigate = (path, state) => {
+    // Implement your navigation logic here
+    console.log(`Navigating to ${path}`);
+    // Example: Redirect to the target path using window.location or any other navigation method
+    // window.location.href = path;
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {currentPage === 'login' ? (
+        <LoginPage isConnected={isConnected} onLogin={handleLogin} />
+      ) : (
+        <UploadPage onNavigate={handleNavigate} />
+      )}
     </div>
   );
 }
